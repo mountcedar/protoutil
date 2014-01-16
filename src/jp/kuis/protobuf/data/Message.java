@@ -9,23 +9,27 @@ public class Message<T extends com.google.protobuf.GeneratedMessage> implements 
 	protected static Logger logger = LoggerFactory.getLogger(Message.class);
 	protected T data = null;
 	
+	public Message() {}
+	
 	public Message(T data) {
 		this.data = data;
 	}
-	
-	@SuppressWarnings({ "null", "unchecked" })
+
+	/*
+	@SuppressWarnings({ "unchecked" })
 	@Override
 	public Serializable create(byte[] binary) {
 		try {
-			T tinst = null;
-			Method parseFrom_ = tinst.getClass().getDeclaredMethod("parseFrom");
-			return new Message<T>((T)parseFrom_.invoke(null, binary));
+			//Class<T> clazz = Message.class.getGenericInterfaces();
+			//Method parseFrom_ = clazz.getDeclaredMethod("parseFrom");
+			//return new Message<T>((T)parseFrom_.invoke(null, binary));
 		} catch (Exception e) {
 			logger.error("{}", e);
 			return null;
 		}
 
 	}
+	*/
 
 	@Override
 	public byte[] serialize() {

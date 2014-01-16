@@ -81,7 +81,8 @@ public class TestAppForComm {
 					.setType(Message.Type.ACK)
 					.addData(Data.newBuilder().setStatus("hogehoge")).build();
 
-			DataBuilder builder = new CommDataBuilder();
+			//DataBuilder builder = new CommDataBuilder();
+			jp.kuis.protobuf.data.Message<Message> handler = new jp.kuis.protobuf.data.Message<Message>();
 			Receivable reciever = new Receivable() {
 				@Override
 				public boolean onRecv(Serializable data) {
@@ -97,12 +98,11 @@ public class TestAppForComm {
 				}
 			};
 
-			ProtocolBufferServer server = new ProtocolBufferServer(builder);
+			ProtocolBufferServer server = new ProtocolBufferServer(handler);
 			server.register(reciever);
 			server.start();
 
-			ProtocolBufferClient client = ProtocolBufferClient.create(
-					"localhost", builder);
+			ProtocolBufferClient client = ProtocolBufferClient.create("localhost", handler);
 			if (client == null) {
 				logger.error("cannot connect to the server.");
 				server.shutdown();
