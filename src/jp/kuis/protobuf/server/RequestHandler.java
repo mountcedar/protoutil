@@ -115,9 +115,11 @@ public class RequestHandler extends Thread {
 	 * @param data
 	 *            the data
 	 * @return true, if successful
+	 * @todo should handle exception properly
 	 */
 	protected boolean send(Serializable data) {
 		try {
+			if (socket != null && socket.isClosed()) return false;
 			int size = data.getSerializedSize();
 			out.writeInt(size);
 			out.flush();
@@ -125,7 +127,7 @@ public class RequestHandler extends Thread {
 			out.flush();
 			return true;
 		} catch (Exception e) {
-			logger.error("{}", e);
+			//logger.error("{}", e);
 			return false;
 		}
 	}
@@ -157,7 +159,7 @@ public class RequestHandler extends Thread {
 					receiver.onRecv(data);
 				}
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			logger.debug("{}", e);
 		} finally {
 			try {

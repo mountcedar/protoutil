@@ -136,17 +136,18 @@ public class ProtocolBufferClient {
 	 * Recv.
 	 * 
 	 * @return the serializable
-	 */
+	 */	
 	public Serializable recv() {
 		try {
 			if (in == null)
 				in = new DataInputStream(socket.getInputStream());
 
 			int size = in.readInt();
-			logger.debug("size: {}", size);
+			//size = Integer.reverseBytes(size);
+			//logger.debug("size: {}", size);
 			byte[] buf = new byte[size];
 			in.readFully(buf);
-			logger.debug("buf: {}", buf);
+			//logger.debug("buf: {}", buf);
 			recvErrorHappend = false;
 			return builder.create(buf);
 		} catch (Exception e) {
