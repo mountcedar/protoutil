@@ -55,7 +55,7 @@ public class TestAppForComm {
 				logger.debug("sended data [{}]", i);
 			}
 
-			Thread.sleep (3000);
+			Thread.sleep (500);
 			server.shutdown();
 			return;
 		} catch (Exception e) {

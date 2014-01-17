@@ -8,9 +8,13 @@ public class Message<T extends com.google.protobuf.GeneratedMessage> implements 
 	protected static Logger logger = LoggerFactory.getLogger(Message.class);
 	public T data = null;
 	protected Class<T> cls = null;
+	protected Method parseFrom_ = null;
 	
 	public Message(Class<T> cls) {
-		this.cls = cls;
+		try {
+			this.cls = cls;
+			this.parseFrom_ = this.cls.getDeclaredMethod("parseFrom", new Class[]{byte[].class});
+		} catch (Exception e) {}
 	}
 	
 	public Message(T data) {
@@ -21,8 +25,7 @@ public class Message<T extends com.google.protobuf.GeneratedMessage> implements 
 	@Override
 	public Serializable create(byte[] binary) {
 		try {
-			if (cls == null) throw new Exception ("cannot create instance due to the class information.");
-			Method parseFrom_ = cls.getDeclaredMethod("parseFrom", new Class[]{byte[].class});
+			if (parseFrom_ == null) throw new Exception ("cannot found method name \"parseFrom(byte[] binary)\"");
 			return new Message<T>((T)parseFrom_.invoke(null, binary));
 			//return null;
 		} catch (Exception e) {
@@ -44,11 +47,10 @@ public class Message<T extends com.google.protobuf.GeneratedMessage> implements 
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public boolean deserialize(byte[] binaries) {
+	public boolean deserialize(byte[] binary) {
 		try {
-			logger.error("data.getClass(): {}", data.getClass());
-			Method parseFrom_ = data.getClass().getDeclaredMethod("parseFrom");
-			this.data = (T)parseFrom_.invoke(binaries);
+			if (parseFrom_ == null) throw new Exception ("cannot found method name \"parseFrom(byte[] binary)\"");			
+			this.data = (T)parseFrom_.invoke(null, binary);
 			return true;
 		} catch (Exception e) {
 			logger.error("{}", e);
