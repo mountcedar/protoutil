@@ -27,11 +27,11 @@ import org.slf4j.LoggerFactory;
  *          /protobuf/socket/server/ProtocolBufferServer.java
  * @author sugiyama
  */
-public class ProtocolBufferServer extends Thread {
+public class ProtocolBuffersServer extends Thread {
 
 	/** for logging. */
 	protected static Logger logger = LoggerFactory
-			.getLogger(ProtocolBufferServer.class);
+			.getLogger(ProtocolBuffersServer.class);
 
 	/** The Constant PORT. */
 	public static final int PORT = 1111;
@@ -58,7 +58,7 @@ public class ProtocolBufferServer extends Thread {
 	 *            the builder
 	 * @brief constructor
 	 */
-	public ProtocolBufferServer(DataBuilder builder) {
+	public ProtocolBuffersServer(DataBuilder builder) {
 		this.builder = builder;
 		this.requests = new ArrayList<RequestHandler>();
 		this.recievers = new ArrayList<Receivable>();

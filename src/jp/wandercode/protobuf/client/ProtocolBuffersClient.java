@@ -21,11 +21,11 @@ import org.slf4j.LoggerFactory;
  *          /protobuf/socket/client/ProtocolBufferClient.java
  * @author sugiyama
  */
-public class ProtocolBufferClient {
+public class ProtocolBuffersClient {
 
 	/** for logging. */
 	protected static Logger logger = LoggerFactory
-			.getLogger(ProtocolBufferClient.class);
+			.getLogger(ProtocolBuffersClient.class);
 
 	/** The Constant PORT. */
 	public static final int PORT = 1111;
@@ -59,10 +59,10 @@ public class ProtocolBufferClient {
 	 *            the builder
 	 * @return the protocol buffer client
 	 */
-	public static ProtocolBufferClient create(String hostname,
+	public static ProtocolBuffersClient create(String hostname,
 			DataBuilder builder) {
 		try {
-			ProtocolBufferClient instance = new ProtocolBufferClient(hostname,
+			ProtocolBuffersClient instance = new ProtocolBuffersClient(hostname,
 					builder);
 			instance.socket = new Socket(hostname, PORT);
 			logger.info("Connected: {}", instance.socket.getInetAddress()
@@ -83,9 +83,9 @@ public class ProtocolBufferClient {
 	 *            the builder
 	 * @return the protocol buffer client
 	 */
-	public static ProtocolBufferClient create(Socket socket, DataBuilder builder) {
+	public static ProtocolBuffersClient create(Socket socket, DataBuilder builder) {
 		try {
-			ProtocolBufferClient instance = new ProtocolBufferClient("",
+			ProtocolBuffersClient instance = new ProtocolBuffersClient("",
 					builder);
 			instance.socket = socket;
 			return instance;
@@ -103,7 +103,7 @@ public class ProtocolBufferClient {
 	 * @param builder
 	 *            the builder
 	 */
-	protected ProtocolBufferClient(String hostname, DataBuilder builder) {
+	protected ProtocolBuffersClient(String hostname, DataBuilder builder) {
 		this.host = hostname;
 		this.builder = builder;
 	}

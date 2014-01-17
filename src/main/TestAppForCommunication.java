@@ -1,10 +1,10 @@
 package main;
 
-import jp.wandercode.protobuf.client.ProtocolBufferClient;
+import jp.wandercode.protobuf.client.ProtocolBuffersClient;
 import jp.wandercode.protobuf.data.Receivable;
 import jp.wandercode.protobuf.data.Serializable;
 import jp.wandercode.protobuf.data.Message;
-import jp.wandercode.protobuf.server.ProtocolBufferServer;
+import jp.wandercode.protobuf.server.ProtocolBuffersServer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,13 +39,13 @@ public class TestAppForCommunication {
 				}
 			};
 
-			ProtocolBufferServer server = new ProtocolBufferServer(builder);
+			ProtocolBuffersServer server = new ProtocolBuffersServer(builder);
 			server.register(reciever);
 			server.start();
 
 			Thread.sleep(3000);
 
-			ProtocolBufferClient client = ProtocolBufferClient.create("localhost", builder);
+			ProtocolBuffersClient client = ProtocolBuffersClient.create("localhost", builder);
 			if (client == null) {
 				logger.error("cannot connect to the server.");
 				server.shutdown();
