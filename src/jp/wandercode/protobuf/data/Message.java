@@ -1,35 +1,35 @@
-package jp.kuis.protobuf.data;
+package jp.wandercode.protobuf.data;
 
 import java.lang.reflect.Method;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Message<T extends com.google.protobuf.GeneratedMessage> implements Serializable, DataBuilder {
 	protected static Logger logger = LoggerFactory.getLogger(Message.class);
-	protected T data = null;
+	public T data = null;
+	protected Class<T> cls = null;
 	
-	public Message() {}
+	public Message(Class<T> cls) {
+		this.cls = cls;
+	}
 	
 	public Message(T data) {
 		this.data = data;
 	}
 
-	/*
-	@SuppressWarnings({ "unchecked" })
+	@SuppressWarnings("unchecked")
 	@Override
 	public Serializable create(byte[] binary) {
 		try {
-			//Class<T> clazz = Message.class.getGenericInterfaces();
-			//Method parseFrom_ = clazz.getDeclaredMethod("parseFrom");
-			//return new Message<T>((T)parseFrom_.invoke(null, binary));
+			if (cls == null) throw new Exception ("cannot create instance due to the class information.");
+			Method parseFrom_ = cls.getDeclaredMethod("parseFrom", new Class[]{byte[].class});
+			return new Message<T>((T)parseFrom_.invoke(null, binary));
+			//return null;
 		} catch (Exception e) {
 			logger.error("{}", e);
 			return null;
 		}
-
 	}
-	*/
 
 	@Override
 	public byte[] serialize() {
@@ -46,6 +46,7 @@ public class Message<T extends com.google.protobuf.GeneratedMessage> implements 
 	@Override
 	public boolean deserialize(byte[] binaries) {
 		try {
+			logger.error("data.getClass(): {}", data.getClass());
 			Method parseFrom_ = data.getClass().getDeclaredMethod("parseFrom");
 			this.data = (T)parseFrom_.invoke(binaries);
 			return true;

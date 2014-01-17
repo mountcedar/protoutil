@@ -1,11 +1,11 @@
-package jp.kuis.protobuf.client;
+package jp.wandercode.protobuf.client;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
 
-import jp.kuis.protobuf.data.DataBuilder;
-import jp.kuis.protobuf.data.Serializable;
+import jp.wandercode.protobuf.data.DataBuilder;
+import jp.wandercode.protobuf.data.Serializable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

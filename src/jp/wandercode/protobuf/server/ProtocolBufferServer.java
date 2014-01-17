@@ -1,7 +1,7 @@
 /**
 	@brief the server to stream protocol buffer message.
  */
-package jp.kuis.protobuf.server;
+package jp.wandercode.protobuf.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -9,9 +9,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.kuis.protobuf.data.DataBuilder;
-import jp.kuis.protobuf.data.Receivable;
-import jp.kuis.protobuf.data.Serializable;
+import jp.wandercode.protobuf.data.DataBuilder;
+import jp.wandercode.protobuf.data.Receivable;
+import jp.wandercode.protobuf.data.Serializable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

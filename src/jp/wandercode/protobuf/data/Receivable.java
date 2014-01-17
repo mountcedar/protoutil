@@ -1,4 +1,4 @@
-package jp.kuis.protobuf.data;
+package jp.wandercode.protobuf.data;
 
 // TODO: 自動生成された Javadoc
 /**
