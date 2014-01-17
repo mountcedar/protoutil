@@ -9,7 +9,11 @@ This java package provides you a way to establish the tcp socket server to handl
 
 ## How to install
 
-Please download the following jar file and include it to your project. Additionally this package requires the following packages.
+Please download the jar file, protoutil-X.X.X.jar and include it to your project from the following uri. 
+
+* https://github.com/mountcedar/protoutil/releases/tag/0.0.2b
+
+Additionally this package requires the following packages.
 
 * logback-classic.jar: should ver. > 0.9.0. The logging implementation package.
 	* can download from http://logback.qos.ch/download.html
@@ -24,20 +28,20 @@ Please download the following jar file and include it to your project. Additiona
 
 This package consists of the following main class.
 
-* ProtocolBufferServer: The server class to establish the protocol buffers server
-* ProtocolBufferClient: The client class to communicate with the above server instance.
+* ProtocolBuffersServer: The server class to establish the protocol buffers server
+* ProtocolBuffersClient: The client class to communicate with the above server instance.
 * Message<T>: The message class to wrap the auto-generated data class <T extends com.google.protobuf.GeneratedMessage>
 
 The following codes are the sample code of the protoutil.
 
-```
+```java
 package main;
 
-import jp.wandercode.protobuf.client.ProtocolBufferClient;
+import jp.wandercode.protobuf.client.ProtocolBuffersClient;
 import jp.wandercode.protobuf.data.Receivable;
 import jp.wandercode.protobuf.data.Serializable;
 import jp.wandercode.protobuf.data.Message;
-import jp.wandercode.protobuf.server.ProtocolBufferServer;
+import jp.wandercode.protobuf.server.ProtocolBuffersServer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,11 +76,11 @@ public class TestAppForComm {
 				}
 			};
 
-			ProtocolBufferServer server = new ProtocolBufferServer(handler);
+			ProtocolBuffersServer server = new ProtocolBuffersServer(handler);
 			server.register(reciever);
 			server.start();
 
-			ProtocolBufferClient client = ProtocolBufferClient.create("localhost", handler);
+			ProtocolBuffersClient client = ProtocolBuffersClient.create("localhost", handler);
 			if (client == null) {
 				logger.error("cannot connect to the server.");
 				server.shutdown();
@@ -131,7 +135,7 @@ comm.Comm.Message msg = comm.Comm.Message.newBuilder()
 
 Then the code build a Protocol Buffers Server with the comm.Comm.Message class,
 
-```
+```java
 Message<comm.Comm.Message> handler = new Message<comm.Comm.Message>(comm.Comm.Message.class);
 Receivable reciever = new Receivable() {
 	@SuppressWarnings("unchecked")
@@ -148,10 +152,6 @@ Receivable reciever = new Receivable() {
 		return true;
 	}
 };
-
-ProtocolBufferServer server = new ProtocolBufferServer(handler);
-server.register(reciever);
-server.start();
 ```
 
 In this stage, the following steps are required.
@@ -167,8 +167,8 @@ In this stage, the following steps are required.
 
 Next, the code generates the client instance to communicate the background server instance.
 
-```
-ProtocolBufferClient client = ProtocolBufferClient.create("localhost", handler);
+```java
+ProtocolBuffersClient client = ProtocolBuffersClient.create("localhost", handler);
 if (client == null) {
 	logger.error("cannot connect to the server.");
 	server.shutdown();
@@ -183,13 +183,13 @@ for (int i = 0; i < 10; i++) {
 
 The send method in the client accept the Message instance as its input, and generates the protobuf binary inside the method and send it to the server with its byte size.
 
-```
+```java
 Thread.sleep (3000);
 ```
 
 This line exists for waiting the server reponse.
 
-```
+```java
 server.shutown();
 ```
 
