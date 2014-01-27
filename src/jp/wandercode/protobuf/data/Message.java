@@ -18,7 +18,11 @@ public class Message<T extends com.google.protobuf.GeneratedMessage> implements 
 	}
 	
 	public Message(T data) {
-		this.data = data;
+		try {
+			this.data = data;
+			this.parseFrom_ = this.data.getClass().getDeclaredMethod("parseFrom", new Class[]{byte[].class});
+		} catch (Exception e) {}
+		
 	}
 
 	@SuppressWarnings("unchecked")

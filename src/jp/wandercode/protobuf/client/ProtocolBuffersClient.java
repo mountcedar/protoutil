@@ -115,7 +115,7 @@ public class ProtocolBuffersClient {
 	 *            the data
 	 * @return true, if successful
 	 */
-	public boolean send(Serializable data) {
+	public synchronized boolean send(Serializable data) {
 		try {
 			if (out == null)
 				out = new DataOutputStream(socket.getOutputStream());
@@ -137,7 +137,7 @@ public class ProtocolBuffersClient {
 	 * 
 	 * @return the serializable
 	 */	
-	public Serializable recv() {
+	public synchronized Serializable recv() {
 		try {
 			if (in == null)
 				in = new DataInputStream(socket.getInputStream());

@@ -21,10 +21,6 @@ import org.slf4j.LoggerFactory;
  * The Class ProtocolBufferServer.
  * 
  * @brief the server to stream or receive protocol buffer
- * @details this code is original from -
- *          https://github.com/mountcedar/local.protobuf
- *          .socket/blob/master/src/local
- *          /protobuf/socket/server/ProtocolBufferServer.java
  * @author sugiyama
  */
 public class ProtocolBuffersServer extends Thread {
@@ -100,7 +96,7 @@ public class ProtocolBuffersServer extends Thread {
 	 * @param e
 	 *            the e
 	 */
-	public void send(Serializable e) {
+	public synchronized void send(Serializable e) {
 		for (RequestHandler handler : requests) {
 			handler.send(e);
 		}
