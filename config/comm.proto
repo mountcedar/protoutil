@@ -1,0 +1,17 @@
+package comm;
+
+message Message {
+	required int32 id = 1;
+	enum Type {
+	     ACK = 0;
+	     SUCCEEDED = 1;
+	     FAILED = 2;
+	     };
+	required Type type = 2;
+	repeated Data data = 3;
+}
+
+message Data {
+	optional string status = 1;	
+}
+
